@@ -1,14 +1,37 @@
-module.exports = {
-	is_prime: is_prime
+
+var memo = {1:false, 2: true};
+var primes = [2];
+
+
+var primes_up_through = function primes_up_through(n){
+	var i, result = [];
+	for(i = 0; i < primes.length; i++){
+		if (primes[i] > n) return result;
+		result.push(primes[i]);
+	}
+	var last_prime = primes[primes.length - 1];
+	for(i = last_prime + 1; i <= n; i++){
+		if (is_prime(i)) result.push(i);
+	}
+	return result;
 };
 
-function is_prime(n){
+var is_prime = function is_prime(n){
 	if (n !== parseInt(n)) throw new Error('Non-integer passed to is_prime');
 	if (n < 2) return false;
-	if (n == 2) return true;
+	if (n in memo) return memo[n];
 
-	for (var i = 2; i <= Math.sqrt(n); i ++){
-		if (n % i === 0) return false;
-	}
-	return true;
-}
+	var is_prime = primes_up_through(Math.sqrt(n)).every(function(prime){
+		return n % prime != 0;
+	});
+	memo[n] = is_prime;
+	if(is_prime) primes.push(n);
+	return is_prime;
+};
+
+
+module.exports = {
+	is_prime: is_prime,
+	memo: memo,
+	primes: primes,
+};

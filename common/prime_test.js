@@ -1,0 +1,10 @@
+var is_prime = require('./prime.js').is_prime;
+console.assert(is_prime(1) === false);
+console.assert(is_prime(2) === true);
+console.assert(is_prime(3) === true);
+console.assert(is_prime(4) === false);
+console.assert(is_prime(27) === false);
+console.assert(is_prime(51) === false);
+console.assert(is_prime(89) === true);
+console.assert(is_prime(987654231) === false);
+console.log('still works');
