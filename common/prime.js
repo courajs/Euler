@@ -29,9 +29,18 @@ var is_prime = function is_prime(n){
 	return is_prime;
 };
 
+function* prime_slice(start, end) {
+  var i;
+  for (i = start; i<= end; i++) {
+    if (is_prime(i)) {
+      yield i;
+    }
+  }
+}
 
 module.exports = {
 	is_prime: is_prime,
 	memo: memo,
 	primes: primes,
+  prime_slice
 };
