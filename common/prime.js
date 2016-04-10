@@ -38,9 +38,37 @@ function* prime_slice(start, end) {
   }
 }
 
+function factor(n) {
+  if (is_prime(n)) {
+    return { [n]: 1 };
+  }
+
+  var result = {};
+
+  for (var prime of prime_slice(2, n/2)) {
+    while (n % prime === 0) {
+      n = n / prime;
+      increment(result, prime);
+    }
+    if (is_prime(n)) {
+      increment(result, n);
+      break;
+    }
+  }
+
+  return result;
+}
+
+function increment(cache, prop) {
+  cache[prop] = cache[prop] + 1 || 1;
+  return cache;
+}
+
 module.exports = {
 	is_prime: is_prime,
 	memo: memo,
 	primes: primes,
-  prime_slice
+  prime_slice,
+  factor,
+  increment
 };
